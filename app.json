@@ -5,6 +5,14 @@
       "bundler": "metro"
     },
     "name": "ReactNative",
-    "slug": "ReactNative"
+    "slug": "ReactNative",
+    "extra": {
+      "eas": {
+        "projectId": "7d8ccc7f-39ff-44a4-aa5e-d37a56fa1932"
+      }
+    },
+    "android": {
+      "package": "com.seatplanner.app"
+    }
   }
 }
