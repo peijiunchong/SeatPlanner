@@ -1,18 +1,34 @@
 {
   "expo": {
-    "scheme": "acme",
-    "web": {
-      "bundler": "metro"
+    "name": "SeatPlanner",
+    "slug": "SeatPlanner",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
     },
-    "name": "ReactNative",
-    "slug": "ReactNative",
-    "extra": {
-      "eas": {
-        "projectId": "7d8ccc7f-39ff-44a4-aa5e-d37a56fa1932"
-      }
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
     },
     "android": {
-      "package": "com.seatplanner.app"
+      "adaptiveIcon": {
+        "foregroundImage": "",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": ""
+    },
+    "packagerOpts": {
+      "sourceExts": [ "js", "json", "ts", "tsx", "jsx", "vue"],
+      "congif": "metro.config.js"
     }
   }
 }
