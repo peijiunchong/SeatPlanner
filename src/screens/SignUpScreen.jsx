@@ -1,9 +1,17 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { TouchableOpacity, View, Text } from 'react-native'
 
-const SignUpScreen = () => {
+const SignUpScreen = ({navigation}) => {
   return (
-    <Text>SignUpScreen</Text>
+    <View>
+
+      <Text>SignUpScreen</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("SignIn")}
+      >
+        <Text>SignIn</Text>
+      </TouchableOpacity>
+    </View>
   )
 }
 

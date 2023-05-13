@@ -1,133 +1,184 @@
 import { Link } from '@react-navigation/native';
 import React, { useState } from 'react'
-import { Text, View, TextInput, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import { Text, View, TextInput, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useAuth } from '../contexts/Auth';
-import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const SignInScreen = ({navigation}) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+
+  const handleShowPassword = () => {
+    setSecureTextEntry(!secureTextEntry);
+  }
 
   const {signIn, error} = useAuth();
 
   return (
-      <KeyboardAvoidingView
+    <View
+      style={{
+        flex:1,
+        padding: 5,
+        justifyContent: 'center'
+      }}
+    >
+      <Text style={{
+        justifyContent: 'center',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 25,
+        color: "#003F88"
+      }}>Log In Now</Text>
+
+      <Text style={{
+        justifyContent: 'center',
+        textAlign: 'center',
+        color: "#6c757d",
+        paddingTop: 5
+      }}>Please Log In to continue using our app</Text>
+      
+      <View
         style={{
-          flex:1,
-          justifyContent: 'center',
-          alignItems: 'center'
+          justifyContent:'center',
+          alignItems:'center',
+          marginTop: 40,
         }}
       >
-          <Text style={{
-            justifyContent: 'center',
-            textAlign: 'center'
-          }}>Welcome Again!</Text>
-          
-          <View style={{
-            backgroundColor: "#fff",
-            borderRadius: 30,
-            width: "75%",
-            height: 45,
-            marginBottom: 20,
-            marginTop: 20,
-          }}>
-            <TextInput
-              style={{
-                height: 50,
-                flex: 1,
-                padding: 10,
-                marginLeft: 20,
-              }}
-              value={email}
-              placeholder="Enter your email"
-              onChangeText={(email) => setEmail(email)}
-              /> 
-          </View> 
-            {error?.type === "request_validation" ? <Text>Email must match format email</Text> : <></>}
-          <View style={{
-            backgroundColor: "#fff",
-            borderRadius: 30,
-            width: "75%",
-            height: 45,
-            alignItems: "flex-start",
-          }}>
-            <TextInput
-              style={{
-                height: 50,
-                flex: 1,
-                padding: 10,
-                marginLeft: 20,
-              }}
-              placeholder="Password"
-              secureTextEntry={true}
-              onChangeText={(password) => setPassword(password)}
+        <View style={{
+          backgroundColor: "#fff",
+          borderRadius: 10,
+          width: "85%",
+          height: 50,
+          marginBottom: 15,
+        }}>
+          <TextInput
+            style={{
+              height: 50,
+              flex: 1,
+              padding: 5,
+              marginLeft: 15,
+            }}
+            value={email}
+            placeholder="test@gmail.com"
+            onChangeText={(email) => setEmail(email)}
             /> 
-          </View>
-            {error?.type === "invalid_credentials" ? <Text>Invalid Credentials</Text> : <></>}
+        </View> 
+        <View style={{
+          backgroundColor: "#fff",
+          borderRadius: 10,
+          width: "85%",
+          height: 50,
+          marginBottom: 15,
+          flexDirection: 'row'
+        }}>
+          <TextInput
+            style={{
+              height: 50,
+              flex: 1,
+              padding: 5,
+              marginLeft: 15,
+            }}
+            placeholder="password"
+            secureTextEntry={secureTextEntry}
+            onChangeText={(password) => setPassword(password)}
+          /> 
 
-          <View
-            style={{justifyContent:'flex-start', alignItems: 'flex-start'}}
-            >
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ForgetPasswordStack')}
-              >
-              <Text style={{
-                marginTop: 10,
-                fontSize: 12,
-                color: 'grey',
-                textDecorationLine: 'underline',
-              }}>Forgot Password?</Text> 
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity style={{
-            width:"75%",
-            borderRadius:25,
-            height:50,
-            alignItems:"center",
-            justifyContent:"center",
-            marginTop:20,
-            backgroundColor:"#98AFC7",
-          }}
-            onPress={() => signIn(email, password)}
+          <TouchableOpacity
+            style={{justifyContent:'center', marginRight: 15}}
+            onPress={() => handleShowPassword()}
           >
-            <Text style={{letterSpacing: 5, color: '#fff'}}>LOGIN</Text> 
+            {
+              secureTextEntry ? <Ionicons name='eye-off-outline' size={20}/> : <Ionicons name='eye-outline' size={20}/>
+            }
           </TouchableOpacity>
-          
-          <View style={{flexDirection: 'row', alignItems: 'center', margin:10, marginTop: 50}}>
-            <View style={{flex: 1, height: 1, backgroundColor: '#fff'}} />
-            <View>
-              <Text style={{width: 125, textAlign: 'center'}}>Or Continue With</Text>
-            </View>
-            <View style={{flex: 1, height: 1, backgroundColor: '#fff'}} />
-          </View>
+        </View>
+      </View>
+      <View
+        style={{justifyContent:'flex-start', alignItems: 'flex-end'}}
+        >
+        <TouchableOpacity
+          style={{marginRight: 25, marginBottom: 30}}
+          onPress={() => navigation.navigate('ForgetPasswordStack')}
+          >
+          <Text style={{
+            fontSize: 12,
+            color: '#00509D',
+            opacity: 0.5,
+            textDecorationLine: 'underline',
+          }}>Forgot Password?</Text> 
+        </TouchableOpacity>
+      </View>
 
-          <View style={{flexDirection:'row'}}>
-            <TouchableOpacity
-              style={{margin: 20, borderRadius: 20, borderColor: "#fff", width: 65, alignItems:'center', borderWidth:2, padding:10}}
-            >
-              <Icon name='google' size={30}/>
-            </TouchableOpacity>
+      <View
+        style={{
+          justifyContent:'center',
+          alignItems:'center',
+        }}
+      >
+        <TouchableOpacity style={{
+          width:"85%",
+          borderRadius:10,
+          height:50,
+          alignItems:"center",
+          justifyContent:"center",
+          backgroundColor:"#003F88",
+          opacity: 0.9,
+          marginBottom: 15
+        }}
+          onPress={() => signIn(email, password)}
+        >
+          <Text style={{letterSpacing: 5, color: '#fff'}}>LOGIN</Text> 
+        </TouchableOpacity>
+      </View>
+    
+      <View
+        style={{
+          justifyContent:'center',
+          alignItems:'center',
+        }}
+      >
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{textAlign:'center'}}>Don't have an account?&nbsp; &nbsp;</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("SignUp")} >
+            <Text style={{textDecorationLine: 'underline', color: '#00509D', opacity: 0.5, textAlign: 'center'}}> Sign up here</Text>
+          </TouchableOpacity>
+        </View>
 
-            <TouchableOpacity
-              style={{margin: 20, borderRadius: 20, borderColor: "#fff", width: 65, alignItems:'center', borderWidth:2, padding:10}}
-            >
-              <Icon name='facebook' size={30}/>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{margin: 20, borderRadius: 20, borderColor: "#fff", width: 65, alignItems:'center', borderWidth:2, padding:10}}
-            >
-              <Icon name='apple' size={30}/>
-            </TouchableOpacity>
-          </View>
-
+        <View style={{flexDirection: 'row', alignItems: 'center', margin:10, marginTop: 40}}>
+          <View style={{flex: 1, height: 1, backgroundColor: '#00509D'}} />
           <View>
-            <Text>No Account? <Link to={{screen: 'SignUp'}} style={{textDecorationLine: 'underline'}}>Sign up here</Link></Text>
+            <Text style={{width: 125, textAlign: 'center'}}>Or Connect With</Text>
           </View>
-      </KeyboardAvoidingView>
+          <View style={{flex: 1, height: 1, backgroundColor: '#00509D'}} />
+        </View>
+
+        <View style={{flexDirection:'row'}}>
+          <TouchableOpacity
+            style={{margin: 10, borderRadius: 20, width: 65, alignItems:'center', padding:10}}
+          >
+            <FontAwesome name='google' size={30} color="#c1121f"/>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{margin: 10, borderRadius: 20, width: 65, alignItems:'center', padding:10}}
+          >
+            <FontAwesome name='facebook' size={30} color="#00509D"/>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{margin: 10, borderRadius: 20, width: 65, alignItems:'center', padding:10}}
+          >
+            <FontAwesome name='apple' size={30}/>
+          </TouchableOpacity>
+        </View>
+
+        
+      </View>
+    </View>
   )
 }
 
